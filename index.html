@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우리집 귀염둥이 쫑이 🐾</title>
+    <!-- Cute Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-bg">
+        <i class="fa-solid fa-bone float-icon"></i>
+        <i class="fa-solid fa-paw float-icon"></i>
+        <i class="fa-solid fa-heart float-icon"></i>
+        <i class="fa-solid fa-bone float-icon"></i>
+        <i class="fa-solid fa-paw float-icon"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-dog"></i> 쫑이의 일기장
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">홈</a></li>
+                <li><a href="#about">프로필</a></li>
+                <li><a href="#gallery">사진첩</a></li>
+                <li><a href="#guestbook">방명록</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="bounce-text">
+                <span>우</span><span>리</span><span>집</span> 
+                <span>천</span><span>사</span>, 
+                <span class="highlight">쫑이!</span>
+            </h1>
+            <p>사랑스러운 8살 꼬마 숙녀 미니푸들 쫑이의 공간에 오신 걸 환영해요! 🐶💕</p>
+            <div class="hero-image-wrapper">
+                <!-- Fallback to a placeholder if the local image is not available -->
+                <img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?q=80&w=600&auto=format&fit=crop" alt="귀여운 쫑이" class="hero-image" id="main-dog-image">
+                <div class="sparkle">✨</div>
+                <div class="sparkle">✨</div>
+                <div class="sparkle">✨</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2 class="section-title"><i class="fa-solid fa-bone"></i> 쫑이를 소개할개 <i class="fa-solid fa-bone"></i></h2>
+        <div class="profile-card">
+            <div class="profile-info">
+                <div class="info-item">
+                    <span class="label">이름</span>
+                    <span class="value">쫑이 (Jjong-i)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">나이</span>
+                    <span class="value">8살 (최강 동안!)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">성별</span>
+                    <span class="value">예쁜 공주님 🎀</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">견종</span>
+                    <span class="value">미니푸들 (매력만점 꼽슬머리)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">매력 포인트</span>
+                    <span class="value">초롱초롱한 눈망울과 사랑스러운 미소</span>
+                </div>
+            </div>
+            <div class="profile-decoration">
+                <i class="fa-solid fa-paw big-paw"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <h2 class="section-title"><i class="fa-solid fa-camera-retro"></i> 쫑이의 찰칵찰칵 <i class="fa-solid fa-camera-retro"></i></h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1595152220455-8ec0732800dd?q=80&w=400&auto=format&fit=crop" alt="쫑이 일상 1">
+                <div class="overlay"><span>산책 중! 🐾</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1625316708582-7c38734be31d?q=80&w=400&auto=format&fit=crop" alt="쫑이 일상 2">
+                <div class="overlay"><span>간식 주세요 🍖</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1606558452445-5601269ed72a?q=80&w=400&auto=format&fit=crop" alt="쫑이 일상 3">
+                <div class="overlay"><span>코코낸내 💤</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=400&auto=format&fit=crop" alt="쫑이 일상 4">
+                <div class="overlay"><span>빼꼼 👀</span></div>
+            </div>
+        </div>
+        <p class="gallery-note">* 현재는 임시 사진들입니다. 쫑이의 진짜 사진으로 교체해주세요!</p>
+    </section>
+
+    <!-- Guestbook Section -->
+    <section id="guestbook" class="guestbook">
+        <h2 class="section-title"><i class="fa-solid fa-envelope-open-text"></i> 쫑이에게 한마디 <i class="fa-solid fa-envelope-open-text"></i></h2>
+        <div class="form-container">
+            <form id="messageForm">
+                <input type="text" id="senderName" placeholder="누가 남기나요? (예: 언니, 오빠)" required>
+                <textarea id="messageContent" placeholder="쫑이에게 하고 싶은 말을 적어주세요! 멍멍!" rows="4" required></textarea>
+                <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> 발도장 꾹 남기기</button>
+            </form>
+            <div class="message-list" id="messageList">
+                <!-- Messages will appear here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made with <i class="fa-solid fa-heart" style="color: #ff6b81;"></i> for Jjong-i</p>
+    </footer>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-paw" id="cursorPaw"><i class="fa-solid fa-paw"></i></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
