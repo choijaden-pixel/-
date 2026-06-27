@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Falling Petals Container -->
+    <div id="petals-container"></div>
+
     <!-- Floating Background Elements -->
     <div class="floating-bg">
         <i class="fa-solid fa-bone float-icon"></i>
@@ -106,8 +109,15 @@
                 <div class="overlay"><span>코코낸내 💤</span></div>
             </div>
 
+            <div class="gallery-item">
+                <img src="./assets/jjong5.jpg" alt="쫑이 일상 4">
+                <div class="overlay"><span>심쿵 주의 💘</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="./assets/jjong6.jpg" alt="쫑이 일상 5">
+                <div class="overlay"><span>우주 최고 미모 ✨</span></div>
+            </div>
         </div>
-
     </section>
 
     <!-- Guestbook Section -->
@@ -129,6 +139,20 @@
     <footer>
         <p>Made with <i class="fa-solid fa-heart" style="color: #ff6b81;"></i> for Jjong-i</p>
     </footer>
+
+    <!-- Music Player Button -->
+    <div class="music-player" id="musicBtn">
+        <i class="fa-solid fa-music"></i>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="bgmAudio" loop>
+        <!-- Cute royalty free music -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/21/audio_31743c58bb.mp3?filename=cute-creatures-10669.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="barkAudio">
+        <source src="https://www.soundjay.com/misc/sounds/dog-barking-1.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Custom Cursor -->
     <div class="cursor-paw" id="cursorPaw"><i class="fa-solid fa-paw"></i></div>

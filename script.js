@@ -163,4 +163,64 @@ document.addEventListener('DOMContentLoaded', () => {
             messageList.appendChild(msgCard);
         }
     }
+
+    // 🌸 Falling Petals Effect
+    const petalsContainer = document.getElementById('petals-container');
+    const petalIcons = ['fa-heart', 'fa-leaf', 'fa-star'];
+    setInterval(() => {
+        const petal = document.createElement('i');
+        const icon = petalIcons[Math.floor(Math.random() * petalIcons.length)];
+        petal.className = `fa-solid ${icon} petal`;
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = Math.random() * 3 + 4 + 's';
+        petal.style.fontSize = Math.random() * 10 + 10 + 'px';
+        petalsContainer.appendChild(petal);
+        setTimeout(() => petal.remove(), 7000);
+    }, 400);
+
+    // ✨ Sparkle Trail Effect
+    document.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.8) {
+            const sparkle = document.createElement('i');
+            sparkle.className = 'fa-solid fa-sparkles sparkle-trail';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            sparkle.style.fontSize = Math.random() * 10 + 5 + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+    });
+
+    // 🎵 Music Player Logic
+    const musicBtn = document.getElementById('musicBtn');
+    const bgmAudio = document.getElementById('bgmAudio');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            bgmAudio.pause();
+            musicBtn.classList.remove('playing');
+        } else {
+            bgmAudio.play();
+            musicBtn.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    });
+
+    // 🐶 Bark Sound on Hero Image Click
+    const heroImage = document.getElementById('main-dog-image');
+    const barkAudio = document.getElementById('barkAudio');
+    heroImage.style.cursor = 'pointer';
+    
+    heroImage.addEventListener('click', () => {
+        barkAudio.currentTime = 0;
+        barkAudio.play();
+        
+        // Add a cute little jump animation when clicked
+        heroImage.style.transform = 'scale(1.1) translateY(-20px)';
+        setTimeout(() => {
+            heroImage.style.transform = 'scale(1) translateY(0)';
+        }, 300);
+    });
+
 });
