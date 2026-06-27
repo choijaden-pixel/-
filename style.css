@@ -426,45 +426,64 @@ section {
     color: var(--text-dark);
 }
 
-/* Gallery Grid - Polaroid Style */
+/* Gallery Section */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .gallery-item {
-    background: var(--polaroid-bg);
-    padding: 15px 15px 60px 15px;
-    border-radius: 2px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     position: relative;
-    overflow: visible;
-    transition: transform 0.4s ease;
-    cursor: pointer;
-    transform: rotate(calc(-3deg + (Math.random() * 6deg))); /* Will be set via nth-child roughly */
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    background: white;
+    padding: 10px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Alternate rotations for polaroids */
-.gallery-item:nth-child(odd) {
-    transform: rotate(-3deg);
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.5s;
 }
-.gallery-item:nth-child(even) {
-    transform: rotate(4deg);
+
+.overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(255, 107, 129, 0.8);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
-.gallery-item:nth-child(3n) {
-    transform: rotate(-1deg);
+
+.overlay span {
+    color: white;
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    transform: translateY(20px);
+    transition: transform 0.3s;
 }
 
 .gallery-item:hover {
-    transform: scale(1.05) rotate(0deg);
+    transform: scale(1.05) rotate(2deg);
     z-index: 10;
 }
 
-}
-
-.gallery-item:hover img {
-    transform: scale(1.1);
+.gallery-item:nth-child(even):hover {
+    transform: scale(1.05) rotate(-2deg);
 }
 
 .gallery-item:hover .overlay {
