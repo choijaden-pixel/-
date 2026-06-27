@@ -11,9 +11,22 @@
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <i class="fa-solid fa-dog bounce"></i>
+            <h2>쫑이네 집으로 달려가는 중... 🐾</h2>
+        </div>
+    </div>
+
+    <!-- Night Mode Toggle -->
+    <div class="night-mode-toggle" id="nightModeBtn">
+        <i class="fa-solid fa-moon"></i>
+    </div>
+
     <!-- Falling Petals Container -->
     <div id="petals-container"></div>
 
@@ -143,6 +156,15 @@
         <p>Made with <i class="fa-solid fa-heart" style="color: #ff6b81;"></i> for Jjong-i</p>
     </footer>
 
+    <!-- Interactive Toy (Bone) -->
+    <div class="interactive-toy" id="throwToyBtn">
+        <i class="fa-solid fa-bone"></i>
+    </div>
+    <!-- Dog that chases the toy -->
+    <div class="toy-chaser" id="toyChaser">
+        <img src="./assets/jjong1.jpg" alt="뛰어오는 쫑이">
+    </div>
+
     <!-- Music Player Button -->
     <div class="music-player" id="musicBtn">
         <i class="fa-solid fa-music"></i>
@@ -159,6 +181,6 @@
     <!-- Custom Cursor -->
     <div class="cursor-paw" id="cursorPaw"><i class="fa-solid fa-paw"></i></div>
 
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>

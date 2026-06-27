@@ -1,4 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 🐾 Loading Screen
+    const loadingScreen = document.getElementById('loading-screen');
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => loadingScreen.style.display = 'none', 500);
+        }, 800); // Show loading screen for at least 0.8s for cuteness
+    });
+
+    // 🌙 Night Mode Toggle
+    const nightModeBtn = document.getElementById('nightModeBtn');
+    let isNightMode = false;
+    nightModeBtn.addEventListener('click', () => {
+        isNightMode = !isNightMode;
+        document.body.classList.toggle('night-mode');
+        
+        // Change icon and petals
+        const icon = nightModeBtn.querySelector('i');
+        if (isNightMode) {
+            icon.className = 'fa-solid fa-sun';
+            petalIconsArray = ['fa-star', 'fa-moon', 'fa-cloud'];
+        } else {
+            icon.className = 'fa-solid fa-moon';
+            petalIconsArray = ['fa-heart', 'fa-leaf', 'fa-star'];
+        }
+    });
+
     // Custom Cursor
     const cursor = document.getElementById('cursorPaw');
     
@@ -181,12 +208,12 @@ document.addEventListener('DOMContentLoaded', () => {
         messageList.appendChild(msgCard);
     }
 
-    // 🌸 Falling Petals Effect
+    // 🌸 Falling Petals / Stars Effect
     const petalsContainer = document.getElementById('petals-container');
-    const petalIcons = ['fa-heart', 'fa-leaf', 'fa-star'];
+    let petalIconsArray = ['fa-heart', 'fa-leaf', 'fa-star'];
     setInterval(() => {
         const petal = document.createElement('i');
-        const icon = petalIcons[Math.floor(Math.random() * petalIcons.length)];
+        const icon = petalIconsArray[Math.floor(Math.random() * petalIconsArray.length)];
         petal.className = `fa-solid ${icon} petal`;
         petal.style.left = Math.random() * 100 + 'vw';
         petal.style.animationDuration = Math.random() * 3 + 4 + 's';
@@ -261,6 +288,38 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             heroImage.style.transform = 'scale(1) translateY(0)';
         }, 300);
+    });
+
+    // 🦴 Interactive Toy
+    const throwToyBtn = document.getElementById('throwToyBtn');
+    const toyChaser = document.getElementById('toyChaser');
+    let isChasing = false;
+
+    throwToyBtn.addEventListener('click', () => {
+        if (isChasing) return;
+        isChasing = true;
+        
+        // Animate bone throwing
+        const bone = throwToyBtn.querySelector('i');
+        bone.style.transform = 'translateY(-100px) rotate(360deg)';
+        bone.style.transition = 'transform 0.5s';
+        
+        setTimeout(() => {
+            bone.style.transform = 'translateY(0) rotate(0)';
+        }, 500);
+
+        // Dog chases
+        toyChaser.classList.add('chasing');
+        
+        // Dog runs back
+        setTimeout(() => {
+            toyChaser.style.left = '-150px'; // Run back
+            setTimeout(() => {
+                toyChaser.classList.remove('chasing');
+                toyChaser.style.left = ''; // Reset CSS
+                isChasing = false;
+            }, 2000); // Time to run back
+        }, 3000); // Time staying there
     });
 
 });
