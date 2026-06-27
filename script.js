@@ -44,44 +44,107 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Guestbook Form Submission
+    // Guestbook Form Submission & Firebase Integration
     const messageForm = document.getElementById('messageForm');
     const messageList = document.getElementById('messageList');
+    const FIREBASE_URL = 'https://jjong-de843-default-rtdb.firebaseio.com/messages.json';
 
-    // Add some default messages
-    const initialMessages = [
-        { name: '주인 언니', text: '우리 예쁜 쫑이! 아프지 말고 오래오래 함께하자 사랑해 💕' },
-        { name: '동네 멍멍이 친구', text: '쫑이야 다음에 또 공원에서 만나서 같이 놀자 왈왈!' }
-    ];
+    // Fetch existing messages from Firebase
+    async function loadMessages() {
+        try {
+            messageList.innerHTML = '<p style="text-align:center; color:var(--text-light);">🐾 방명록을 불러오는 중이개...</p>';
+            const response = await fetch(FIREBASE_URL);
+            if (!response.ok) throw new Error('서버 에러');
+            const data = await response.json();
+            
+            messageList.innerHTML = ''; // Clear loading text
+            
+            if (data) {
+                // Firebase returns an object with unique keys, we convert it to an array
+                const messagesArray = Object.keys(data).map(key => ({
+                    id: key,
+                    ...data[key]
+                }));
+                
+                // Sort by timestamp descending (newest first)
+                messagesArray.sort((a, b) => b.timestamp - a.timestamp);
+                
+                messagesArray.forEach(msg => addMessageToDOM(msg.name, msg.text));
+            } else {
+                messageList.innerHTML = '<p style="text-align:center; color:var(--text-light);">아직 작성된 방명록이 없어요! 첫 발도장을 찍어주세요 🐾</p>';
+            }
+        } catch (error) {
+            console.error('Error loading messages:', error);
+            messageList.innerHTML = '<p style="text-align:center; color:red;">방명록을 불러오는데 실패했어요 ㅠㅠ</p>';
+        }
+    }
 
-    initialMessages.forEach(msg => addMessageToDOM(msg.name, msg.text));
+    // Load messages on startup
+    loadMessages();
 
-    messageForm.addEventListener('submit', (e) => {
+    // Handle new message submission
+    messageForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const nameInput = document.getElementById('senderName');
         const contentInput = document.getElementById('messageContent');
+        const btn = messageForm.querySelector('.submit-btn');
         
         const name = nameInput.value.trim();
         const text = contentInput.value.trim();
         
         if (name && text) {
-            addMessageToDOM(name, text);
-            
-            // Clear form
-            nameInput.value = '';
-            contentInput.value = '';
-            
-            // Add a little celebration effect (could be confetti, but let's just do a simple scale animation on the button)
-            const btn = messageForm.querySelector('.submit-btn');
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> 남겨졌어요!';
-            setTimeout(() => {
+            // Disable button during submission
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 전송 중...';
+
+            const newMessage = {
+                name: name,
+                text: text,
+                timestamp: Date.now()
+            };
+
+            try {
+                // Send to Firebase
+                const response = await fetch(FIREBASE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newMessage)
+                });
+                
+                if (!response.ok) throw new Error('저장 실패');
+
+                // Add to top of list immediately for good UX
+                addMessageToDOM(name, text, true);
+                
+                // Clear form
+                nameInput.value = '';
+                contentInput.value = '';
+                
+                // Success effect
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> 저장 완료!';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 발도장 꾹 남기기';
+                }, 2000);
+
+                // Remove the "no messages" text if it was the first message
+                if (messageList.querySelector('p')) {
+                    const p = messageList.querySelector('p');
+                    if (p.textContent.includes('아직 작성된')) {
+                        p.remove();
+                    }
+                }
+            } catch (error) {
+                console.error('Error saving message:', error);
+                alert('방명록 저장에 실패했습니다. 다시 시도해주세요!');
+                btn.disabled = false;
                 btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 발도장 꾹 남기기';
-            }, 2000);
+            }
         }
     });
 
-    function addMessageToDOM(name, text) {
+    function addMessageToDOM(name, text, prepend = false) {
         const msgCard = document.createElement('div');
         msgCard.className = 'message-card';
         
@@ -94,8 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msgCard.appendChild(msgHeader);
         msgCard.appendChild(msgBody);
         
-        // Add to top of list
-        if (messageList.firstChild) {
+        if (prepend && messageList.firstChild) {
             messageList.insertBefore(msgCard, messageList.firstChild);
         } else {
             messageList.appendChild(msgCard);
