@@ -240,30 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgmAudio = document.getElementById('bgmAudio');
     let isPlaying = false;
 
-    // Attempt to auto-play music
-    const playMusic = () => {
-        bgmAudio.play().then(() => {
-            isPlaying = true;
-            musicBtn.classList.add('playing');
-        }).catch(err => {
-            // Browsers often block auto-play without user interaction
-            console.log("Auto-play blocked by browser. Waiting for user interaction.");
-            isPlaying = false;
-        });
-    };
-
-    // Try playing immediately
-    playMusic();
-
-    // If auto-play was blocked, play on first interaction anywhere
-    document.body.addEventListener('click', () => {
-        if (!isPlaying && bgmAudio.paused) {
-            playMusic();
-        }
-    }, { once: true });
-
     musicBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent body click from firing
+        e.stopPropagation(); // Prevent body click from firing if any
         if (isPlaying) {
             bgmAudio.pause();
             musicBtn.classList.remove('playing');
