@@ -47,7 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Guestbook Form Submission & Firebase Integration
     const messageForm = document.getElementById('messageForm');
     const messageList = document.getElementById('messageList');
+    const pagination = document.getElementById('pagination');
     const FIREBASE_URL = 'https://jjong-de843-default-rtdb.firebaseio.com/messages.json';
+    
+    let globalMessages = [];
+    let currentPage = 1;
+    const itemsPerPage = 5;
 
     // Fetch existing messages from Firebase
     async function loadMessages() {
@@ -57,25 +62,47 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('서버 에러');
             const data = await response.json();
             
-            messageList.innerHTML = ''; // Clear loading text
-            
             if (data) {
-                // Firebase returns an object with unique keys, we convert it to an array
-                const messagesArray = Object.keys(data).map(key => ({
+                globalMessages = Object.keys(data).map(key => ({
                     id: key,
                     ...data[key]
                 }));
-                
                 // Sort by timestamp descending (newest first)
-                messagesArray.sort((a, b) => b.timestamp - a.timestamp);
-                
-                messagesArray.forEach(msg => addMessageToDOM(msg.name, msg.text));
-            } else {
-                messageList.innerHTML = '<p style="text-align:center; color:var(--text-light);">아직 작성된 방명록이 없어요! 첫 발도장을 찍어주세요 🐾</p>';
+                globalMessages.sort((a, b) => b.timestamp - a.timestamp);
             }
+            renderPage();
         } catch (error) {
             console.error('Error loading messages:', error);
             messageList.innerHTML = '<p style="text-align:center; color:red;">방명록을 불러오는데 실패했어요 ㅠㅠ</p>';
+        }
+    }
+
+    function renderPage() {
+        messageList.innerHTML = '';
+        pagination.innerHTML = '';
+        
+        if (globalMessages.length === 0) {
+            messageList.innerHTML = '<p style="text-align:center; color:var(--text-light);">아직 작성된 방명록이 없어요! 첫 발도장을 찍어주세요 🐾</p>';
+            return;
+        }
+        
+        const totalPages = Math.ceil(globalMessages.length / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const pageMessages = globalMessages.slice(startIndex, endIndex);
+        
+        pageMessages.forEach(msg => addMessageToDOM(msg.name, msg.text));
+        
+        // Render pagination buttons
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+            btn.textContent = i;
+            btn.addEventListener('click', () => {
+                currentPage = i;
+                renderPage();
+            });
+            pagination.appendChild(btn);
         }
     }
 
@@ -114,8 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (!response.ok) throw new Error('저장 실패');
 
-                // Add to top of list immediately for good UX
-                addMessageToDOM(name, text, true);
+                // Update global array and re-render page 1
+                globalMessages.unshift(newMessage);
+                currentPage = 1;
+                renderPage();
                 
                 // Clear form
                 nameInput.value = '';
@@ -127,14 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 발도장 꾹 남기기';
                 }, 2000);
-
-                // Remove the "no messages" text if it was the first message
-                if (messageList.querySelector('p')) {
-                    const p = messageList.querySelector('p');
-                    if (p.textContent.includes('아직 작성된')) {
-                        p.remove();
-                    }
-                }
             } catch (error) {
                 console.error('Error saving message:', error);
                 alert('방명록 저장에 실패했습니다. 다시 시도해주세요!');
@@ -157,11 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msgCard.appendChild(msgHeader);
         msgCard.appendChild(msgBody);
         
-        if (prepend && messageList.firstChild) {
-            messageList.insertBefore(msgCard, messageList.firstChild);
-        } else {
-            messageList.appendChild(msgCard);
-        }
+        messageList.appendChild(msgCard);
     }
 
     // 🌸 Falling Petals Effect

@@ -549,6 +549,33 @@ footer {
     font-size: 1.2rem;
 }
 
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.page-btn {
+    background: white;
+    border: 2px solid var(--secondary-color);
+    color: var(--text-dark);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.page-btn:hover, .page-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
 /* Music Player */
 .music-player {
     position: fixed;
